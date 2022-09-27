@@ -11,6 +11,7 @@ def list_difference(list1, list2):
             result.remove(value)
     return result
 
+#問題の出題と答えの確認をし結果を表示する関数
 def lfa():
     t1 = time.time()
     a_l = []
