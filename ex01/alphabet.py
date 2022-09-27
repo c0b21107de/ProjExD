@@ -1,13 +1,15 @@
 import random
 import time
-w_c = 10
-diff = 2
+w_c = 10 #対象文字の表示数
+diff = 2 #差分の数
+
 def list_difference(list1, list2):
     result = list1.copy()
     for value in list2:
         if value in result:
             result.remove(value)
     return result
+
 def lfa():
     t1 = time.time()
     a_l = []
@@ -39,4 +41,5 @@ def lfa():
     else:
         print("最初からやり直し")
         y = lfa()
+        
 c = lfa()
