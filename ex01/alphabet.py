@@ -3,6 +3,7 @@ import time
 w_c = 10 #対象文字の表示数
 diff = 2 #差分の数
 
+#差分を求める関数
 def list_difference(list1, list2):
     result = list1.copy()
     for value in list2:
