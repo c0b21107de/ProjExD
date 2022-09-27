@@ -41,5 +41,5 @@ def lfa():
     else:
         print("最初からやり直し")
         y = lfa()
-        
+
 c = lfa()
