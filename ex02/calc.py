@@ -24,4 +24,8 @@ for i, num in enumerate(range(9,-1,-1),1):
         j += 1
         k = 0
 
+plus = tk.Button(root,text="+",font=("",30),width=4,height=2)
+plus.bind("<1>",button_click)
+plus.grid(row=4, column=1)
+
 root.mainloop()
