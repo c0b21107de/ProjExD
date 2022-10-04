@@ -14,7 +14,7 @@ def button_click(event):
 # totalを求める関数
 def button_total(event):
     total = entry.get()
-    if (re.search("\d", total) == None): # 入力式に数字が含まれているかの判定
+    if (re.search("\d", total) is None): # 入力式に数字が含まれているかの判定
         entry.delete(0,tk.END)
         tkm.showwarning("警告","数字が含まれていません")
     else:
