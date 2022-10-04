@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
+from turtle import right
 
 def button_click(event):
     btn = event.widget
@@ -9,7 +10,10 @@ def button_click(event):
 root = tk.Tk()
 root.geometry("300x500")
 
-j, k = 0, 0
+entry = tk.Entry(root, justify="right", font=("",40), width=10)
+entry.grid(row=0, column=0, columnspan=3)
+
+j, k = 1, 0 #jは行/kは列
 for i, num in enumerate(range(9,-1,-1),1):
     button = tk.Button(root, text=f"{num}", font=("",30), width=4, height=2)
     button.bind("<1>",button_click)
