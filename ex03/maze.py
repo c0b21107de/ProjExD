@@ -27,10 +27,7 @@ def key_up(event): # pra6
 
 
 def main_proc(): # pra7
-    global cx, cy
-    global mx, my
-    global tmr
-    
+    global cx, cy, mx, my, tmr
     delta = {
         # [横座標移動分, 縦座標移動分]
         ""     : [0,  0], 
@@ -39,7 +36,6 @@ def main_proc(): # pra7
         "Left" : [-1, 0],
         "Right": [+1, 0],
     }
-
     if maze_list[my+delta[key][1]][mx+delta[key][0]] == 0:
         mx, my = mx+delta[key][0], my+delta[key][1] # 練習11
         cx, cy = mx*100+50, my*100+50
