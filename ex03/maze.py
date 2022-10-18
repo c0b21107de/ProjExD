@@ -30,28 +30,17 @@ def main_proc(): # pra7
     global cx, cy
     global mx, my
     global tmr
-    if key == "c": # ゴールまで直接行く
-        mx = random_goal
-        my = 8
-    if key == "Up":
-        my -= 1
-    if key == "Down":
-        my += 1
-    if key == "Left":
-        mx -= 1
-    if key == "Right":
-        mx += 1
-    if maze_list[my][mx] == 0:
+    delta = {
+        # [横座標移動分, 縦座標移動分]
+        ""     : [0,  0], 
+        "Up"   : [0, -1],
+        "Down" : [0, +1],
+        "Left" : [-1, 0],
+        "Right": [+1, 0],
+    }
+    if maze_list[my+delta[key][1]][mx+delta[key][0]] == 0:
+        mx, my = mx+delta[key][0], my+delta[key][1] # 練習11
         cx, cy = mx*100+50, my*100+50
-    else:
-        if key == "Up":
-            my += 1
-        if key == "Down":
-            my -= 1
-        if key == "Left":
-            mx += 1
-        if key == "Right":
-            mx -= 1
     if mx == random_goal and my == 8: # ゴールに到達したら終了
         canv.coords("tori", cx, cy)
         return
@@ -67,7 +56,7 @@ if __name__ == "__main__":
     canv = tk.Canvas(root, width=1500, height=900, bg="black") # pra2
     canv.pack()
 
-    label = tk.Label(root, font=("", 30))
+    label = tk.Label(root, font=("", 80))
     label.pack()
 
     # pra9
