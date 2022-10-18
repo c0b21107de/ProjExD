@@ -8,7 +8,7 @@ def count_up(): # 開始からの時刻を計測する
     global mx, my
     tmr = tmr + 1
     label["text"] = tmr
-    if mx == random_goal and my == 8:
+    if mx == random_goal and my == 8: # ゴールで計測終了
         root.after_cancel(jid)
         jid = None
         return
@@ -30,7 +30,7 @@ def main_proc(): # pra7
     global cx, cy
     global mx, my
     global tmr
-    if key == "c":
+    if key == "c": # ゴールまで直接行く
         mx = random_goal
         my = 8
     if key == "Up":
@@ -52,7 +52,7 @@ def main_proc(): # pra7
             mx += 1
         if key == "Right":
             mx -= 1
-    if mx == random_goal and my == 8:
+    if mx == random_goal and my == 8: # ゴールに到達したら終了
         canv.coords("tori", cx, cy)
         return
     canv.coords("tori", cx, cy)
