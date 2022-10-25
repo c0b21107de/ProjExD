@@ -23,6 +23,9 @@ def main():
     bomb_rct = bomb_sfc.get_rect()
     bomb_rct.centerx, bomb_rct.centery = random.randint(10, scrn_rct.width), random.randint(0, scrn_rct.height)
 
+    # pra6
+    vx, vy = +1, +1
+
     clock = pg.time.Clock()
     # pra2
     while True:
@@ -41,7 +44,7 @@ def main():
             tori_rct.centerx -= 1
         if key_states[pg.K_RIGHT]:
             tori_rct.centerx += 1
-        
+        bomb_rct.move_ip(vx,vy)
         scrn_sfc.blit(bomb_sfc, bomb_rct)
         pg.display.update()
         clock.tick(1000)
