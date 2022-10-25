@@ -58,6 +58,8 @@ def main():
             tori_rct.centerx -= 1
         if key_states[pg.K_RIGHT]:
             tori_rct.centerx += 1
+        
+        # pra7
         yoko, tate = check_bound(tori_rct, scrn_rct)
         if yoko == -1:
             if key_states[pg.K_LEFT]:
@@ -76,6 +78,11 @@ def main():
         vy *= tate
         bomb_rct.move_ip(vx,vy)
         scrn_sfc.blit(bomb_sfc, bomb_rct)
+
+        # pra8
+        if tori_rct.colliderect(bomb_rct):
+            return
+
         pg.display.update()
         clock.tick(1000)
 
