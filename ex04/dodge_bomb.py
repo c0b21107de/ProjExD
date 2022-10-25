@@ -19,6 +19,11 @@ def check_bound(obj_rct, scr_rct):
     return yoko, tate
 
 def gameover(): # gameover画面の追加
+    """
+    ゲームオーバー画面の表示
+    c：コンテニュー
+    escape：終了
+    """
     scrn_sfc = pg.display.set_mode((1600,900))
     scrn_rct = scrn_sfc.get_rect()
     bg_sfc = pg.image.load("fig/gameover.png")
