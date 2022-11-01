@@ -11,7 +11,7 @@ main_dir = os.path.split(os.path.abspath(__file__))[0]
 
 SCREENRECT = pg.Rect(0, 0, 640, 480)
 
-
+# 画面の表示
 class Screen:
     
     def __init__(self, title, width_height, background_image):
@@ -25,6 +25,7 @@ class Screen:
         self.sfc.blit(self.bgi_sfc, self.bgi_rct)
 
 
+# こうかとんの表示
 class Bird:
     
     key_delta = {
@@ -56,6 +57,7 @@ class Bird:
         self.blit(scr)
 
 
+# 爆弾の表示
 class Bomb:
 
     def __init__(self, color, radius, speed, scr:Screen):
@@ -78,6 +80,7 @@ class Bomb:
         self.blit(scr)
 
 
+# 敵の表示
 class NewEnemy:
 
     def __init__(self, enemy_image, xy, speed):
@@ -153,6 +156,7 @@ def check_bound(obj_rct, scr_rct):
     return yoko, tate
 
 
+# 画像の読み込み
 def load_image(file):
     """loads an image, prepares it for play"""
     file = os.path.join(main_dir, "data", file)
@@ -163,6 +167,7 @@ def load_image(file):
     return surface.convert()
 
 
+# 音の読み込み
 def load_sound(file):
     """because pygame can be be compiled without mixer."""
     if not pg.mixer:
@@ -176,7 +181,8 @@ def load_sound(file):
     return None
 
 
-def gameover(): # gameover画面の追加
+# gameover画面の追加
+def gameover():
     """
     ゲームオーバー画面の表示
     """
@@ -210,13 +216,13 @@ def main():
     # newenemy
     ney = NewEnemy("ex05/data/alien1.jpg", (40, 40), (+1, +1))
 
+    # shot
     shot = Shot((255, 255, 255), 10, (+1, +1), scr, tori)
 
     # sound
     boom_sound = load_sound("boom.wav")
     # shoot_sound = load_sound("car_door.wav")
     
-
     clock = pg.time.Clock() # 練習1
     while True:
         scr.blit()
