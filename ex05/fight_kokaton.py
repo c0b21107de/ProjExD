@@ -214,7 +214,7 @@ def main():
 
     # sound
     boom_sound = load_sound("boom.wav")
-    shoot_sound = load_sound("car_door.wav")
+    # shoot_sound = load_sound("car_door.wav")
     
 
     clock = pg.time.Clock() # 練習1
@@ -231,13 +231,13 @@ def main():
         ney.update(scr)
 
         key_state = pg.key.get_pressed()
-        if key_state[pg.K_SPACE]:
+        if   key_state[pg.K_SPACE]:
             shot.update(scr)
-            if shot.rct.colliderect(bomb.rct):
-                time.sleep(100)
+            # if shot.rct.colliderect(bomb.rct):
+            #     time.sleep(100)
                 
-            if shot.rct.collidedict(ney.rct):
-                time.sleep(100)
+            # if shot.rct.collidedict(ney.rct):
+            #     time.sleep(100)
 
         boom_sound.play()
         # 練習8
@@ -249,15 +249,8 @@ def main():
             gameover()
             return
 
-        # if shot.rct.colliderect(bomb.rct):
-        #     time.sleep(100)
-            
-        # if shot.rct.collidedict(ney.rct):
-        #     time.sleep(100)
-
         pg.display.update() #練習2
         clock.tick(1000)
-
 
 
 if __name__ == "__main__":
