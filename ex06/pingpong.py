@@ -143,6 +143,8 @@ def main():
         for event in pg.event.get(): # 練習2
             if event.type == pg.QUIT:
                 return
+            if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                return
 
         ball.update(scr)
         player.update(scr)
