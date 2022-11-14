@@ -68,13 +68,13 @@ class Player:
             self.vy = -1
             self.rct.move_ip(self.vx, self.vy)
             if check_bound(self.rct, scr.rct) != 1:
-                self.vy = 0
+                self.vy = 1
                 self.rct.move_ip(self.vx, self.vy)
         if key_states[pg.K_DOWN]:
             self.vy = 1
             self.rct.move_ip(self.vx, self.vy)
             if check_bound(self.rct,scr.rct) != 1:
-                self.vy = 0
+                self.vy = -1
                 self.rct.move_ip(self.vx, self.vy)
         self.blit(scr)
 
@@ -130,7 +130,7 @@ def score(ball, p_score, e_score, scr:Screen):
 
 
 def main():
-    scr = Screen("PingPong", (1600, 800),"fig/pg_bg.jpg")
+    scr = Screen("PingPong", (1600, 800),"./ProjExD-1/ex06/pg_bg.jpg")
     line = Line(15, scr.rct.height, scr)
     ball = Ball((255, 0, 0), 10, scr)
     player = Player((255, 255, 255), 15, 70, (15, scr.rct.height/2))
@@ -143,8 +143,16 @@ def main():
         for event in pg.event.get(): # 練習2
             if event.type == pg.QUIT:
                 return
+            # エスケープキーでウインドウを閉じる
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 return
+            # 何かあった時ようにクリアーボタン
+            if event.type == pg.KEYDOWN and event.key == pg.K_c:
+                ball = Ball((255, 0, 0), 10, scr)
+                score.p_score , score.e_score = 0,0
+                player.rct.centerx, player.rct.centery = 15, scr.rct.height/2
+                enemy.rct.centerx, enemy.rct.centery = scr.rct.width-15, scr.rct.height/2
+
 
         ball.update(scr)
         player.update(scr)
