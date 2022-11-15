@@ -113,8 +113,11 @@ class Enemy:
     def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rct)
     
-    def update(self, scr: Screen):
-        self.vy *= check_bound(self.rct, scr.rct)
+    def update(self, scr: Screen, ball: Ball):
+        if ball.rct.top >= self.rct.top:
+            self.vy = +2
+        elif ball.rct.top <= self.rct.top:
+            self.vy = -2
         self.rct.move_ip(self.vx, self.vy) 
         self.blit(scr)
 
@@ -181,7 +184,7 @@ def main():
 
         ball.update(scr)
         player.update(scr)
-        enemy.update(scr)
+        enemy.update(scr,ball)
         score.update(ball, scr)
         if ball.rct.colliderect(enemy.rct):
             ball.vx *= -1
