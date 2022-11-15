@@ -36,7 +36,7 @@ class Ball:
         pg.draw.circle(self.sfc, color, (radius,radius), radius) # 爆弾用の円を描く
         self.rct = self.sfc.get_rect()
         self.rct.centerx = scr.rct.width/2
-        self.rct.centery = scr.rct.height/2
+        self.rct.centery = random.randint(0,scr.rct.height)
         rand1 = random.choice(speed)
         rand2 = random.choice(speed)
         self.vx, self.vy = rand1, rand2  # 練習6
@@ -85,7 +85,7 @@ class Enemy:
         pg.draw.rect(self.sfc, color, (width, height, width, height), 10)
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
-        self.vx, self.vy = 0, +1
+        self.vx, self.vy = 0, +3
 
     def blit(self, scr:Screen):
         scr.sfc.blit(self.sfc, self.rct)
