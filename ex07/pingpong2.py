@@ -133,8 +133,8 @@ class Score:
         self.font = pg.font.SysFont(None,80) 
 
     def blit(self, scr:Screen):
-        scr.sfc.blit(self.font.render(str(self.p_score), True,(255,255,255)),(scr.rct.width/4,10.))
-        scr.sfc.blit(self.font.render(str(self.e_score), True,(255,255,255)),(scr.rct.width*3/4,10.))
+        scr.sfc.blit(self.font.render(str(f"You {self.p_score}"), True,(255,255,255)),(scr.rct.width/4,10.))
+        scr.sfc.blit(self.font.render(str(f"CPU {self.e_score}"), True,(255,255,255)),(scr.rct.width*3/4,10.))
     
     def update(self, ball:Ball, scr:Screen):
         self.p_score, self.e_score = score(ball.rct.centerx, self.p_score, self.e_score, scr)
