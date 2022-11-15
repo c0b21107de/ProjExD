@@ -4,103 +4,129 @@ import random
 
 
 class Screen:
-    def __init__(self, title, width_height, background_image):
+    def __init__(self, title: str, width_height: tuple(int, int), background_image: str):
+        """
+        イニシャライザ
+        title : ゲームタイトル
+        width_height : 画面サイズ
+        background_image : 背景画像ファイルパス
+        """
         pg.display.set_caption(title)
         self.sfc = pg.display.set_mode(width_height)
-        # self.color = color
-        # self.sfc.fill(self.color)
         self.rct = self.sfc.get_rect()
         self.bgi_sfc = pg.image.load(background_image)
         self.bgi_rct = self.bgi_sfc.get_rect()
+        
     def blit(self):
-        # self.sfc.fill(self.color)
-        # self.sfc.blit(self.sfc, self.rct)
         self.sfc.blit(self.bgi_sfc, self.bgi_rct)
 
+
 class Line:
-    def __init__(self,width, height, scr:Screen):
+    def __init__(self, width: int, height: int, scr: Screen):
+        """ 
+        イニシャライザ
+        width : x座標
+        height : y座標
+        scr : 背景クラス
+        """
         self.sfc = pg.Surface((width, height))
         self.rct = self.sfc.get_rect()
         self.rct.move_ip(scr.rct.width/2,0)
-        pg.draw.line(self.sfc,(255,255,255),(scr.rct.width/2,5),(scr.rct.width/2,scr.rct.height-5),10)
+        pg.draw.line(self.sfc,(255,255,255),(scr.rct.width/2,5),(scr.rct.width/2, scr.rct.height-5), 10)
 
-        # self.rct = self.sfc.get_rect()
     def blit(self, scr:Screen):
         scr.sfc.blit(self.sfc,self.rct)
 
+
 class Ball:
-    def __init__(self, color, radius, scr:Screen):
+    def __init__(self, color: tuple(int, int, int), radius: int, scr:Screen):
+        """
+        イニシャライザ
+        color : 色タプル
+        radius : ボールのサイズ
+        scr : 背景クラス
+        """
         speed = [-1, 1]
         self.sfc = pg.Surface((radius*2, radius*2)) # 空のSurface
         self.sfc.set_colorkey((0, 0, 0)) # 四隅の黒い部分を透過させる
-        pg.draw.circle(self.sfc, color, (radius,radius), radius) # 爆弾用の円を描く
+        pg.draw.circle(self.sfc, color, (radius, radius), radius) # 爆弾用の円を描く
         self.rct = self.sfc.get_rect()
-        self.rct.centerx = scr.rct.width/2
-        self.rct.centery = scr.rct.height/2
-        rand1 = random.choice(speed)
-        rand2 = random.choice(speed)
-        self.vx, self.vy = rand1, rand2  # 練習6
+        self.rct.center = scr.rct.width/2, scr.rct.height/2
+        self.vx, self.vy = random.choice(speed), random.choice(speed)
 
-    def blit(self, scr:Screen):
+    def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rct)
     
-    def update(self, scr:Screen):
+    def update(self, scr: Screen):
         tate = check_bound(self.rct, scr.rct)
         self.vy *= tate
-        self.rct.move_ip(self.vx, self.vy) # 練習6
+        self.rct.move_ip(self.vx, self.vy)
         self.blit(scr)
 
 
 class Player:
-    def __init__(self, color, width, height, xy):
+    def __init__(self, color: tuple(int, int, int), width: int, height: int, xy: tuple(int, int)):
+        """ 
+        イニシャライザ
+        color : 色タプル
+        width : x座標
+        height : y座標
+        xy : 中心タプル
+        """
         self.sfc = pg.Surface((width, height))
         pg.draw.rect(self.sfc, color, (width, height, width, height), 10)
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
         self.vx, self.vy = 0, +1
 
-    def blit(self, scr:Screen):
+    def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rct)
 
-    def update(self, scr:Screen):
+    def update(self, scr: Screen):
         key_states = pg.key.get_pressed()
-        if key_states[pg.K_UP]:
-            self.vy = -1
-            self.rct.move_ip(self.vx, self.vy)
-            if check_bound(self.rct, scr.rct) != 1:
-                self.vy = 0
+        key_vy_tuple = [(pg.K_UP, -1), (pg.K_DOWN, 1)]
+        for key, vy in key_vy_tuple:
+            if key_states[key]:
+                self.vy = vy
                 self.rct.move_ip(self.vx, self.vy)
-        if key_states[pg.K_DOWN]:
-            self.vy = 1
-            self.rct.move_ip(self.vx, self.vy)
-            if check_bound(self.rct,scr.rct) != 1:
-                self.vy = 0
-                self.rct.move_ip(self.vx, self.vy)
+                if check_bound(self.rct, scr.rct) != 1:
+                    self.vy = 0
+                    self.rct.move_ip(self.vx, self.vy)
         self.blit(scr)
 
 
 class Enemy:
-    def __init__(self, color, width, height, xy):
+    def __init__(self, color: tuple(int, int, int), width: int, height: int, xy: tuple(int, int)):
+        """ 
+        イニシャライザ
+        color : 色タプル
+        width : x座標
+        height : y座標
+        xy : 中心座標タプル
+        """
         self.sfc = pg.Surface((width, height))
         pg.draw.rect(self.sfc, color, (width, height, width, height), 10)
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
-        self.vx, self.vy = 0, +1
+        self.vx, self.vy = 0, 1
 
-    def blit(self, scr:Screen):
+    def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rct)
     
-    def update(self, scr:Screen):
-        tate = check_bound(self.rct, scr.rct)
-        self.vy *= tate
-        self.rct.move_ip(self.vx, self.vy) # 練習6
+    def update(self, scr: Screen):
+        self.vy *= check_bound(self.rct, scr.rct)
+        self.rct.move_ip(self.vx, self.vy) 
         self.blit(scr)
 
 
 class Score:
-    def __init__(self, p_score, e_score, ball:Ball, scr:Screen):
-        self.p_score = p_score
-        self.e_score = e_score
+    def __init__(self, p_score: int, e_score: int):
+        """ 
+        イニシャライザ
+        p_score : プレイヤーの獲得したスコア
+        e_score : 敵の獲得したスコア
+        """
+        self.p_score, self.e_score  = p_score, e_score
         self.font = pg.font.SysFont(None,80) 
 
     def blit(self, scr:Screen):
@@ -108,20 +134,18 @@ class Score:
         scr.sfc.blit(self.font.render(str(self.e_score), True,(255,255,255)),(scr.rct.width*3/4,10.))
     
     def update(self, ball:Ball, scr:Screen):
-        p_score, e_score = score(ball.rct.centerx, self.p_score, self.e_score, scr)
-        self.p_score = p_score
-        self.e_score = e_score
+        self.p_score, self.e_score = score(ball.rct.centerx, self.p_score, self.e_score, scr)
         self.blit(scr)
 
 
-def check_bound(obj_rct, scr_rct):
+def check_bound(obj_rct: pg.Rect, scr_rct: pg.Rect):
     tate = +1
     if obj_rct.top < scr_rct.top or scr_rct.bottom < obj_rct.bottom: 
         tate = -1
     return tate
 
 
-def score(ball, p_score, e_score, scr:Screen):
+def score(ball, p_score: int, e_score: int, scr:Screen):
     if ball < 0:
         e_score += 1
     if ball > scr.rct.width:
@@ -136,11 +160,12 @@ def main():
     player = Player((255, 255, 255), 15, 70, (15, scr.rct.height/2))
     enemy = Enemy((255, 255, 255), 15, 70, (scr.rct.width-15, scr.rct.height/2))
     score = Score(0, 0, ball, scr)
-    clock = pg.time.Clock() # 練習1
+    clock = pg.time.Clock()
+    
     while True:
         scr.blit()
         line.blit(scr)
-        for event in pg.event.get(): # 練習2
+        for event in pg.event.get(): 
             if event.type == pg.QUIT:
                 return
 
@@ -155,7 +180,7 @@ def main():
         
         if ball.rct.centerx < 0 or ball.rct.centerx > scr.rct.width:
             ball = Ball((255, 0, 0), 10, scr)
-        pg.display.update() #練習2
+        pg.display.update()
         clock.tick(1000)
 
 
