@@ -120,7 +120,7 @@ class Enemy:
 
 
 class Score:
-    def __init__(self, p_score: int, e_score: int, ball:Ball, scr:Screen):
+    def __init__(self, p_score: int, e_score: int):
         """ 
         イニシャライザ
         p_score : プレイヤーの獲得したスコア
@@ -160,7 +160,7 @@ def main():
     ball = Ball((255, 0, 0), 10, scr)
     player = Player((255, 255, 255), 15, 70, (15, scr.rct.height/2))
     enemy = Enemy((255, 255, 255), 15, 70, (scr.rct.width-15, scr.rct.height/2))
-    score = Score(0, 0, ball, scr)
+    score = Score(0, 0)
     clock = pg.time.Clock()
     
     while True:
@@ -184,7 +184,7 @@ def main():
         player.update(scr)
         enemy.update(scr)
         score.update(ball, scr)
-        if ball.rct.colliderect(enemy.rct): # こうかとんrctが爆弾rctと重なったら
+        if ball.rct.colliderect(enemy.rct):
             ball.vx *= -1
         if ball.rct.colliderect(player.rct):
             ball.vx *= -1
