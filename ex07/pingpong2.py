@@ -117,7 +117,7 @@ class Enemy:
         self.vy *= check_bound(self.rct, scr.rct)
         self.rct.move_ip(self.vx, self.vy) 
         self.blit(scr)
-
+        
 
 class Score:
     def __init__(self, p_score: int, e_score: int, ball:Ball, scr:Screen):
@@ -148,7 +148,7 @@ def check_bound(obj_rct: pg.Rect, scr_rct: pg.Rect):
 def score(ball, p_score: int, e_score: int, scr:Screen):
     if ball < 0:
         e_score += 1
-        
+
     if ball > scr.rct.width:
         p_score += 1
     return p_score, e_score
